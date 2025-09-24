@@ -1,0 +1,21 @@
+region = "us-east-1"
+cluster_name = "bb-rke2"
+key_name = "my-keypair"
+
+controller_count = 3
+worker_desired = 3
+worker_min = 1
+worker_max = 10
+
+controller_instance_types = ["t3.small"]
+worker_instance_types = ["t3.micro", "t3.small", "t3a.small"]
+
+controllers_spot = false # strongly recommended false
+workers_spot = true
+worker_spot_max_price = "" # market price
+
+open_k8s_api_to_world = true
+ssh_ingress_cidr = "0.0.0.0/0"
+
+rke2_version = "" # latest
+disable_ingress_nginx = true # Big Bang will provide ingress

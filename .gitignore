@@ -1,0 +1,26 @@
+# Terraform generated directories
+.terraform/
+
+# Terraform state files and backups
+*.tfstate
+*.tfstate.backup
+*.terraform.lock.hcl
+
+# Terraform crash log files
+crash.log
+crash.*.log
+
+# Terraform secret variable files
+# If you're managing secrets in another way (like with Vault), you may
+# want to use a more specific ignore rule.
+*.tfvars
+*.tfvars.json
+
+# Terraform CLI configuration files
+.terraformrc
+terraform.rc
+
+# Saved plan files
+# Example: terraform plan -out=tfplan
+*.tfplan
+
