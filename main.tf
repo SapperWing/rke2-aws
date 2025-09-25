@@ -1,3 +1,5 @@
+# main.tf for rke2-aws
+
 terraform {
   required_providers {
     aws = { source = "hashicorp/aws", version = ">= 5.0" }
@@ -20,13 +22,18 @@ resource "aws_key_pair" "rke2" {
 }
 
 # 1) Network
+=======
+# 1) Network: First module created due to the vpc_id needed
+# to be passed into the security module
+# TODO: Set "depends on"
+>>>>>>> Stashed changes
 module "network" {
   source = "./modules/network"
   cluster_name = var.cluster_name
   vpc_cidr = var.vpc_cidr
 }
 
-# 2) Security (SG rules)
+# 2) Security: (SG rules) Passes sg_id to both controllers
 module "security" {
   source = "./modules/security"
   vpc_id = module.network.vpc_id
@@ -36,13 +43,13 @@ module "security" {
   open_k8s_api_to_world = var.open_k8s_api_to_world
 }
 
-# 3) Load balancer (NLB) for 6443 and 9345 over controllers
+# 3) Load balancer: (NLB) for 6443 and 9345 over controllers
+# Target groups will attach to controllers ASG later
 module "lb" {
   source = "./modules/loadbalancer"
   cluster_name = var.cluster_name
   vpc_id = module.network.vpc_id
   subnet_ids = module.network.public_subnet_ids
-  # Target groups will attach to controllers ASG later
 }
 
 # 4) Controllers (ASG + Launch Template)
@@ -95,4 +102,3 @@ module "workers" {
   spot_max_price = var.worker_spot_max_price
   capacity_rebalance = var.enable_capacity_rebalance
 }
-
