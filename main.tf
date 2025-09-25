@@ -8,6 +8,17 @@ terraform {
 
 provider "aws" { region = var.region }
 
+locals {
+  rke2_key_name = (
+    var.key_name != "" ? var.key_name : "rke2-key"
+  )
+}
+
+resource "aws_key_pair" "rke2" {
+  key_name   = local.rke2_key_name
+  public_key = file(var.public_key_path)  # e.g., ~/.ssh/id_rsa.pub
+}
+
 # 1) Network
 module "network" {
   source = "./modules/network"
