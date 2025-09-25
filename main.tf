@@ -52,7 +52,7 @@ module "controllers" {
   vpc_id = module.network.vpc_id
   subnet_ids = module.network.public_subnet_ids
   sg_id = module.security.sg_id
-  key_name = var.key_name
+  key_name = aws_key_pair.rke2.key_name
 
   controller_count = var.controller_count
   instance_types = var.controller_instance_types
@@ -78,7 +78,7 @@ module "workers" {
   vpc_id = module.network.vpc_id
   subnet_ids = module.network.public_subnet_ids
   sg_id = module.security.sg_id
-  key_name = var.key_name
+  key_name      = aws_key_pair.rke2.key_name
 
   # connect to controllers via NLB supervisor on 9345
   controller_nlb_dns = module.lb.nlb_dns_name
