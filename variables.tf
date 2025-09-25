@@ -6,6 +6,13 @@ variable "cluster_name" {
   type = string
   default = "rke2-demo" 
 }
+
+variable "public_key_path" {
+  description = "Path to your local SSH public key"
+  type        = string
+  default     = "~/.ssh/id_rsa.pub"
+}
+
 variable "key_name" { type = string } # existing EC2 key pair
 
 # Sizes / counts
